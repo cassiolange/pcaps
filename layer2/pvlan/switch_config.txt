@@ -1,0 +1,15 @@
+vlan 1,10,20
+!
+vlan 10
+  private-vlan primary
+  private-vlan association 20
+!
+vlan 20
+  private-vlan isolated
+!
+interface Ethernet1/1
+  switchport mode trunk
+!
+interface Ethernet1/2
+  switchport mode private-vlan host
+  switchport private-vlan host-association 10 20
