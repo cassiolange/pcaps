@@ -1,0 +1,28 @@
+hostname N9K-01
+!
+key chain bgp tcp
+  key 10
+    send-id 2
+    recv-id 2
+    key-string 7 072e121f4d1c0b002406195d0a2d
+    send-lifetime local 01:01:01 Jan 01 2026  infinite
+    cryptographic-algorithm HMAC-SHA-256
+    include-tcp-options
+!
+interface Ethernet1/1
+  no switchport
+  ip address 150.1.2.1/24
+  no shutdown
+!
+interface loopback0
+  ip address 150.1.1.1/32
+!
+router bgp 1
+  router-id 150.1.1.1
+  address-family ipv4 unicast
+    network 150.1.1.1/32
+  neighbor 150.1.2.2
+    remote-as 2
+    ao bgp include-tcp-options
+    ttl-security hops 1
+    address-family ipv4 unicast
